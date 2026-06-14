@@ -92,7 +92,8 @@ class DashboardService:
             ml_hits = db.query(Prediction).filter(
                 Prediction.prediction_source.in_([
                     "ml",
-                    "ml-high-confidence"
+                    "ml-high-confidence",
+                    "ml-medium-confidence"
                 ])
             ).count()
 
