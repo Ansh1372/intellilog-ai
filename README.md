@@ -1,154 +1,100 @@
----
-title: Intellilog Backend
-emoji: 🚀
-colorFrom: blue
-colorTo: green
-sdk: docker
-pinned: false
----
-# IntelliLog AI
+<div align="center">
+  <h1>🧠 IntelliLog AI</h1>
+  <p><strong>Intelligent, Self-Hosted Log Classification & Anomaly Alerting System</strong></p>
+  
+  [![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-black?logo=vercel)](#)
+  [![Hugging Face](https://img.shields.io/badge/Backend-Hugging_Face-yellow?logo=huggingface)](#)
+  [![Database](https://img.shields.io/badge/Database-Neon_Postgres-00E599?logo=postgresql)](#)
+  [![FastAPI](https://img.shields.io/badge/API-FastAPI-009688?logo=fastapi)](#)
+  [![React](https://img.shields.io/badge/Frontend-React+Vite-61DAFB?logo=react)](#)
+</div>
 
-A self-hosted log classification and alerting system. Deploy on any server, point your logs at it, and it automatically classifies, stores, alerts, and shows everything in a dashboard.
+---
 
-## Quick Start
+## 📸 Dashboard & Alerts
+
+> **[Insert your beautiful Vercel Dashboard screenshot here]**
+> *(Tip: Take a screenshot showing the colorful charts, System Health badges, and the populated log table)*
+
+<br/>
+
+> **[Insert a screenshot of the automated Email Alert you received here]**
+> *(Tip: Show the email inbox with the [TEST ALERT] or CRITICAL alert from IntelliLog AI)*
+
+---
+
+## 🚀 Live Demo
+**Frontend:** `https://intellilog-ai.vercel.app/` *(Example URL)*
+**Backend API:** `https://[your-hf-space].hf.space`
+
+---
+
+## 🏗️ Cloud Architecture
+
+IntelliLog AI is built as a fully decoupled microservices architecture, completely deployed on modern serverless cloud infrastructure:
+
+1. **Frontend (Vercel):** A blazing-fast React + Vite dashboard displaying real-time metrics, system health, and a searchable log explorer.
+2. **Backend (Hugging Face Spaces):** A FastAPI server running the intelligent classification engine, anomaly detection, and SMTP email alerts.
+3. **Database (Neon Serverless Postgres):** A cloud database storing all logs, model predictions, feedback loops, and metrics.
+4. **LLM Engine (Groq API):** Lightning-fast LLaMA-3 inference for ambiguous log classification.
+
+---
+
+## 🧠 The 3-Stage Classification Pipeline
+
+To minimize latency and LLM API costs, IntelliLog uses a cascading fallback pipeline:
+
+```text
+Log Input → ⚡ Regex Engine ($0) → 🤖 ML Model ($0) → 🧠 Groq LLM (Cost pennies)
+                 ↓ 60%                  ↓ 30%                  ↓ 10%
+            Instant Match          TF-IDF Inference       Complex Analysis
+```
+
+1. **Stage 1 (Regex Engine):** Instantly catches known patterns (e.g., Auth Failures, OOM crashes, Timeouts) using pre-defined rules.
+2. **Stage 2 (Machine Learning):** Uses a custom-trained `TF-IDF + Logistic Regression` model to classify logs with high confidence.
+3. **Stage 3 (Groq LLM):** If the ML model's confidence is below `0.70`, the log is sent to an ultra-fast LLaMA-3 model for contextual understanding and semantic classification.
+
+---
+
+## 🛡️ Key Features
+
+- **Automated Anomaly Detection:** Real-time monitoring of log velocity and error rates.
+- **Instant SMTP Email Alerts:** Automatically sends email warnings to the engineering team the second a `HIGH` or `CRITICAL` severity log (like a DB crash) hits the pipeline.
+- **Feedback Loop:** Built-in dashboard capability to correct AI misclassifications, saving data to Postgres for future ML retrain loops.
+- **Full-Text Search:** Instantly query logs by severity, source, or text.
+- **Real-Time System Health:** Dashboard actively monitors the connection status of the DB, ML engine, and Email SMTP servers.
+
+---
+
+## 💻 Local Development Setup
+
+If you want to run the entire stack locally on your own machine:
 
 ```bash
-git clone https://github.com/your-repo/intellilog-ai.git
+# 1. Clone the repository
+git clone https://github.com/your-username/intellilog-ai.git
 cd intellilog-ai
+
+# 2. Set up environment variables
 cp .env.example .env
-# Add your GROQ_API_KEY to .env
+# Edit .env and add your GROQ_API_KEY, Database URL, and SMTP credentials
+
+# 3. Spin up the infrastructure via Docker
 docker-compose up --build
 ```
 
-- Dashboard: http://localhost:3001
-- API: http://localhost:8000
-- API Docs: http://localhost:8000/docs
+- **Frontend Dashboard:** `http://localhost:3001`
+- **Backend API:** `http://localhost:8000`
+- **API Swagger Docs:** `http://localhost:8000/docs`
 
-## Deployment
-Want to deploy IntelliLog AI for free? Check out our **[Free Deployment Guide](docs/deployment.md)** for instructions on using Hugging Face Spaces, Render, Neon, and Vercel.
-
-## How It Works
-
-3-stage classification pipeline that minimizes cost:
-
-```
-Log Input → Regex Engine ($0) → ML Model ($0) → LLM (only if needed)
-               ↓ 60%              ↓ 30%              ↓ 10%
-```
-
-1. **Regex** catches known patterns (auth failures, OOM, timeouts) — free, instant
-2. **ML Model** (TF-IDF + Logistic Regression) classifies with confidence — free, fast
-3. **LLM** (Groq API) handles only ambiguous logs below 0.70 confidence — costs pennies
-
-## Features
-
-| Feature | Endpoint | Status |
-|---------|----------|--------|
-| Log Classification | `POST /classify` | ✅ |
-| CSV Bulk Upload | `POST /upload-csv` | ✅ |
-| Full-text Search | `GET /logs?q=...&source=...&last=7d` | ✅ |
-| Feedback (Mark Wrong) | `POST /feedback` | ✅ |
-| Model Retrain | `POST /retrain` | ✅ |
-| Per-source Stats | `GET /stats?source=postgres` | ✅ |
-| Health Check | `GET /health` | ✅ |
-| Anomaly Detection | `POST /anomaly-score` | ✅ |
-| Drift Report | `GET /drift-report` | ✅ |
-| Incident Correlation | `GET /incidents` | ✅ |
-| Email Alerts | Auto on High/Critical | ✅ |
-| Webhook Alerts | `POST /alerts/webhook` | ✅ |
-| Rate Limiting | Middleware (1000/sec) | ✅ |
-| Log Retention | `POST /retention/cleanup` | ✅ |
-| Syslog Input | UDP :5514 | ✅ |
-| React Dashboard | http://localhost:3001 | ✅ |
-
-## Classify a Log
-
+### Testing the Pipeline
+You can simulate a live production environment by sending a test log directly via terminal:
 ```bash
-# Basic
 curl -X POST http://localhost:8000/classify \
   -H "Content-Type: application/json" \
-  -d '{"log": "authentication failed for admin user", "source": "nginx"}'
-
-# JSON log (auto-parsed)
-curl -X POST http://localhost:8000/classify \
-  -H "Content-Type: application/json" \
-  -d '{"log": "{\"level\": \"error\", \"msg\": \"connection timeout\", \"service\": \"auth\"}"}'
+  -d '{"log": "CRITICAL: Main Postgres database went offline. Connection timed out.", "source": "DatabaseService"}'
 ```
+*(If your SMTP is configured, this will instantly trigger an email alert!)*
 
-## Search Logs
-
-```bash
-# Text search with filters
-curl "http://localhost:8000/logs?q=timeout&source=postgres&severity=High&last=24h"
-
-# Export all critical logs from last 7 days
-curl "http://localhost:8000/logs?severity=Critical&last=7d&limit=200"
-```
-
-## Feedback Loop
-
-```bash
-# Submit correction
-curl -X POST http://localhost:8000/feedback \
-  -H "Content-Type: application/json" \
-  -d '{"log_id": 42, "correct_label": "Database Error"}'
-
-# Retrain model with corrections
-curl -X POST http://localhost:8000/retrain
-```
-
-## Syslog Integration
-
-Point rsyslog or Docker log driver at IntelliLog:
-
-```bash
-# rsyslog.conf
-*.* @intellilog-server:5514
-
-# Docker log driver
-docker run --log-driver=syslog --log-opt syslog-address=udp://localhost:5514 myapp
-```
-
-## Environment Variables
-
-```env
-GROQ_API_KEY=your_key          # Required for LLM fallback
-DATABASE_URL=postgresql://...   # Auto-configured in Docker
-SMTP_HOST=smtp.gmail.com       # Optional: email alerts
-SMTP_PORT=587
-SMTP_USER=your@email.com
-SMTP_PASSWORD=app_password
-ALERT_EMAIL=team@company.com
-RATE_LIMIT_PER_SECOND=1000     # Max logs/sec per source
-LOG_RETENTION_DAYS=30          # Auto-cleanup after N days
-```
-
-## Train on Real Data
-
-```bash
-# 1. Download Loghub datasets
-git clone https://github.com/logpai/loghub.git data/loghub
-
-# 2. Preprocess and label
-python data/prepare_loghub.py
-
-# 3. Train model
-python -m backend.ml.train_model
-```
-
-## Architecture
-
-```
-Docker Compose
-├── postgres:16     — classified logs, predictions, feedback
-├── backend:8000    — FastAPI + ML pipeline + alerts
-└── frontend:3001   — React dashboard (Tailwind + Recharts)
-```
-
-## Tech Stack
-
-- **Backend**: Python, FastAPI, SQLAlchemy, scikit-learn, Groq API
-- **Frontend**: React, Vite, Tailwind CSS, Recharts
-- **Database**: PostgreSQL
-- **ML**: TF-IDF + Logistic Regression, Isolation Forest (anomaly)
-- **Infra**: Docker Compose, Nginx
+---
+*Built by **[Your Name]** as an exploration of scalable AI infrastructure and modern web deployment.*
