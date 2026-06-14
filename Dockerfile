@@ -16,6 +16,7 @@ USER user
 ENV PATH="/home/user/.local/bin:$PATH"
 
 # Train anomaly model and save training stats (if training data exists)
+RUN python -m backend.ml.train_model || echo "Model training skipped"
 RUN python -m backend.ml.train_anomaly || echo "Anomaly model training skipped"
 RUN python -m backend.ml.save_training_stats || echo "Training stats skipped"
 
@@ -23,6 +24,6 @@ RUN python -m backend.ml.save_training_stats || echo "Training stats skipped"
 COPY --chown=user:user entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
-EXPOSE 8000
+EXPOSE 7860
 
 ENTRYPOINT ["./entrypoint.sh"]
