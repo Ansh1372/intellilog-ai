@@ -19,9 +19,11 @@
 
 ## 📸 Dashboard & Alerts
 
-*(Add your dashboard screenshot here by replacing this line with `![Dashboard](link-to-image)`)*
+<img width="1905" height="971" alt="image" src="https://github.com/user-attachments/assets/d68a48b7-153e-4d4c-8c5e-fbc8084910d1" />
 
-*(Add your email alert screenshot here by replacing this line with `![Alert](link-to-image)`)*
+
+<img width="731" height="702" alt="image" src="https://github.com/user-attachments/assets/66a24cbf-bc5a-46ca-b1b0-cf542ab46695" />
+
 
 ---
 
