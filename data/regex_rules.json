@@ -1,0 +1,62 @@
+[
+  {
+    "pattern": "(?i)(authentication|login).*(failed|denied|invalid)",
+    "classification": "Authentication Failure",
+    "severity": "Medium",
+    "solution": "Check credentials and authentication service"
+  },
+  {
+    "pattern": "(?i)(database|db|postgres|mysql).*(timeout|refused|exhausted|unable|unreachable)",
+    "classification": "Database Error",
+    "severity": "High",
+    "solution": "Check database connectivity and pool status"
+  },
+  {
+    "pattern": "(?i)(api|gateway|request).*(timeout|exceeded)",
+    "classification": "API Timeout",
+    "severity": "Medium",
+    "solution": "Check API latency and upstream services"
+  },
+  {
+    "pattern": "(?i)(disk|filesystem|storage).*(full|exceeded|no storage|critically low|exhaustion)",
+    "classification": "Disk Full",
+    "severity": "Critical",
+    "solution": "Free disk space or increase storage"
+  },
+  {
+    "pattern": "(?i)(500|internal server error|fatal runtime error|backend exception)",
+    "classification": "HTTP 500",
+    "severity": "High",
+    "solution": "Check application logs for unhandled exceptions"
+  },
+  {
+    "pattern": "(?i)(out of memory|memory leak|oom killer|heap space)",
+    "classification": "Memory Leak",
+    "severity": "Critical",
+    "solution": "Investigate memory usage, check for leaks, consider increasing memory limits"
+  },
+  {
+    "pattern": "(?i)(ssl|tls|certificate).*(expired|failed|invalid|mismatch)",
+    "classification": "SSL Error",
+    "severity": "High",
+    "solution": "Renew or replace SSL/TLS certificates"
+  },
+  {
+    "pattern": "(?i)(dns).*(failed|timeout|unavailable|unable to resolve)",
+    "classification": "DNS Failure",
+    "severity": "High",
+    "solution": "Check DNS configuration and nameserver availability"
+  },
+  {
+    "pattern": "(?i)(redis|cache).*(unavailable|timeout|unreachable|failed)",
+    "classification": "Redis Failure",
+    "severity": "High",
+    "solution": "Check Redis connectivity and cluster health"
+  },
+  {
+    "pattern": "(?i)(crashloop|pod.*restart|container.*terminated unexpectedly)",
+    "classification": "Kubernetes CrashLoop",
+    "severity": "Critical",
+    "solution": "Check pod logs, resource limits, and liveness probes"
+  }
+]
