@@ -19,10 +19,13 @@
 
 ## 📸 Dashboard & Alerts
 
-<img width="1905" height="971" alt="image" src="https://github.com/user-attachments/assets/d68a48b7-153e-4d4c-8c5e-fbc8084910d1" />
+<p align="center">
+  <img width="850" src="https://github.com/user-attachments/assets/d68a48b7-153e-4d4c-8c5e-fbc8084910d1" alt="IntelliLog Dashboard" />
+</p>
 
-
-<img width="731" height="702" alt="image" src="https://github.com/user-attachments/assets/66a24cbf-bc5a-46ca-b1b0-cf542ab46695" />
+<p align="center">
+  <img width="500" src="https://github.com/user-attachments/assets/66a24cbf-bc5a-46ca-b1b0-cf542ab46695" alt="SMTP Email Alert" />
+</p>
 
 
 ---
