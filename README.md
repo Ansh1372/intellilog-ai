@@ -24,8 +24,8 @@
 ---
 
 ## 🚀 Live Demo
-**Frontend:** `https://intellilog-ai.vercel.app/` *(Example URL)*
-**Backend API:** `https://[your-hf-space].hf.space`
+**Frontend:** `https://intellilog-ai.vercel.app/`  
+**Backend API:** `https://ansh1372-intellilog-backend.hf.space`
 
 ---
 
