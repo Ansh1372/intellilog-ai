@@ -1,0 +1,31 @@
+# Environment
+.env
+.env.local
+.env.production
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+ENV/
+
+# Models
+models/*.pkl
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project-specific ignored files
+data/loghub/
+data/real_train_logs.csv
+.pytest_cache/
+tests/.pytest_cache/
+backend/tests/.pytest_cache/
