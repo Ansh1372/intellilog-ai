@@ -1,3 +1,11 @@
+---
+title: Intellilog Backend
+emoji: 🚀
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+---
 # IntelliLog AI
 
 A self-hosted log classification and alerting system. Deploy on any server, point your logs at it, and it automatically classifies, stores, alerts, and shows everything in a dashboard.
@@ -15,6 +23,9 @@ docker-compose up --build
 - Dashboard: http://localhost:3001
 - API: http://localhost:8000
 - API Docs: http://localhost:8000/docs
+
+## Deployment
+Want to deploy IntelliLog AI for free? Check out our **[Free Deployment Guide](docs/deployment.md)** for instructions on using Hugging Face Spaces, Render, Neon, and Vercel.
 
 ## How It Works
 
