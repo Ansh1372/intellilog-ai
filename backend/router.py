@@ -12,9 +12,11 @@ logger = logging.getLogger(__name__)
 # Regex stage has its own severity from rules; LLM stage returns severity from the model.
 # This map ensures ML predictions get appropriate severity instead of always "Medium".
 SEVERITY_MAP = {
+    # Critical
     "Memory Leak": "Critical",
     "Disk Full": "Critical",
     "Kubernetes CrashLoop": "Critical",
+    # High
     "Database Error": "High",
     "HTTP 500": "High",
     "SSL Error": "High",
@@ -22,11 +24,22 @@ SEVERITY_MAP = {
     "Redis Failure": "High",
     "Kafka Failure": "High",
     "Payment Failure": "High",
+    # Medium
     "Authentication Failure": "Medium",
     "API Timeout": "Medium",
     "HTTP 403": "Medium",
-    "HTTP 404": "Low",
     "CPU Spike": "Medium",
+    "Slow Query": "Medium",
+    "Rate Limit Warning": "Medium",
+    "Memory Warning": "Medium",
+    "React Component Error": "Medium",
+    # Low — operational / success events
+    "HTTP 404": "Low",
+    "Successful Login": "Low",
+    "Payment Success": "Low",
+    "Data Sync Complete": "Low",
+    "Search Index Updated": "Low",
+    "Component Rendered": "Low",
 }
 
 
@@ -171,7 +184,7 @@ class LogRouter:
         # STEP 4 — MEDIUM CONFIDENCE ML (≥0.70)
         # =========================================
 
-        elif confidence >= 0.70:
+        elif confidence >= 0.55:
             logger.info("[ROUTER] Log resolved at Stage 2 (ML — medium confidence)")
             result = {
                 "matched": True,

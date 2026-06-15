@@ -29,12 +29,14 @@ def save_log_prediction(log_text: str, result: dict, source: str = None, db: Ses
         logger.info(f"[CRUD] Log saved with id: {log_entry.id}, source: {source}")
 
         # SAVE PREDICTION
+        # When matched=False but ML made a prediction, use that instead of "unknown"
+        classification = result.get("classification")
+        if not classification or classification == "unknown":
+            classification = result.get("ml_prediction", "unknown")
+
         prediction_entry = Prediction(
             log_id=log_entry.id,
-            classification=result.get(
-                "classification",
-                result.get("source", "unknown")
-            ),
+            classification=classification,
             confidence=result.get(
                 "confidence",
                 result.get("ml_confidence")

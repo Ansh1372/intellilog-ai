@@ -58,5 +58,89 @@
     "classification": "Kubernetes CrashLoop",
     "severity": "Critical",
     "solution": "Check pod logs, resource limits, and liveness probes"
+  },
+  {
+    "pattern": "(?i)(login|authentication|user).*(successful|succeeded|completed|accepted)",
+    "classification": "Successful Login",
+    "severity": "Low",
+    "solution": "No action needed — normal authentication event"
+  },
+  {
+    "pattern": "(?i)(payment|transaction|order).*(processed|completed|successful|succeeded|approved)",
+    "classification": "Payment Success",
+    "severity": "Low",
+    "solution": "No action needed — normal payment processing"
+  },
+  {
+    "pattern": "(?i)(slow query|execution time|query.*(\\d+)ms)",
+    "classification": "Slow Query",
+    "severity": "Medium",
+    "solution": "Optimize slow database queries, add indexes, check query execution plans"
+  },
+  {
+    "pattern": "(?i)(rate limit|throttl).*(approaching|exceeded|warning|triggered)",
+    "classification": "Rate Limit Warning",
+    "severity": "Medium",
+    "solution": "Monitor API usage, consider rate limit increases or request optimization"
+  },
+  {
+    "pattern": "(?i)(memory usage|memory).*(exceeded|threshold|warning|high|85%|90%|95%)",
+    "classification": "Memory Warning",
+    "severity": "Medium",
+    "solution": "Monitor memory trends, investigate potential memory leaks"
+  },
+  {
+    "pattern": "(?i)(component|frontend|ui|page).*(rendered|loaded|mounted).*(success|complete|\\d+ms)",
+    "classification": "Component Rendered",
+    "severity": "Low",
+    "solution": "No action needed — normal frontend rendering event"
+  },
+  {
+    "pattern": "(?i)(data sync|sync|synchronization).*(completed|success|finished)",
+    "classification": "Data Sync Complete",
+    "severity": "Low",
+    "solution": "No action needed — normal data synchronization"
+  },
+  {
+    "pattern": "(?i)(search index|index).*(updated|rebuilt|refreshed)",
+    "classification": "Search Index Updated",
+    "severity": "Low",
+    "solution": "No action needed — normal search index maintenance"
+  },
+  {
+    "pattern": "(?i)(kafka|message broker|stream).*(failed|unavailable|lag|missing|interrupted)",
+    "classification": "Kafka Failure",
+    "severity": "High",
+    "solution": "Check Kafka broker health, consumer lag, and partition leaders"
+  },
+  {
+    "pattern": "(?i)(payment|transaction).*(failed|declined|refused|error|rollback)",
+    "classification": "Payment Failure",
+    "severity": "High",
+    "solution": "Check payment gateway connectivity and transaction logs"
+  },
+  {
+    "pattern": "(?i)(react|angular|vue|component).*(crash|error|exception|undefined|null)",
+    "classification": "React Component Error",
+    "severity": "Medium",
+    "solution": "Check frontend error boundaries, component props, and state management"
+  },
+  {
+    "pattern": "(?i)(cpu|processor).*(spike|exceeded|threshold|throttl|saturation|high load)",
+    "classification": "CPU Spike",
+    "severity": "Medium",
+    "solution": "Investigate CPU-intensive processes, consider scaling or optimization"
+  },
+  {
+    "pattern": "(?i)(403|forbidden).*(access|resource|endpoint|permission denied)",
+    "classification": "HTTP 403",
+    "severity": "Medium",
+    "solution": "Check user permissions and access control policies"
+  },
+  {
+    "pattern": "(?i)(404|not found|missing route|endpoint unavailable)",
+    "classification": "HTTP 404",
+    "severity": "Low",
+    "solution": "Check URL routing and ensure endpoints are correctly configured"
   }
 ]

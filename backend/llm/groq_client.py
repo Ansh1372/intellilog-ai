@@ -32,25 +32,27 @@ class GroqLLM:
     def analyze_log(self, log_text: str) -> dict:
         logger.info(f"[LLM] Analyzing log: {log_text[:80]}...")
 
-        prompt = f"""
-You are an expert AI log analysis assistant.
+        system_prompt = """You are an expert DevOps log classification engine.
+You MUST classify every log into one of these categories:
 
-Analyze the following log:
+ERROR CATEGORIES:
+- Authentication Failure, Database Error, API Timeout, Disk Full,
+- HTTP 500, HTTP 403, HTTP 404, Memory Leak, CPU Spike,
+- Kubernetes CrashLoop, SSL Error, DNS Failure, Redis Failure,
+- Kafka Failure, Payment Failure, React Component Error
 
-{log_text}
+OPERATIONAL CATEGORIES:
+- Successful Login, Payment Success, Data Sync Complete,
+- Search Index Updated, Component Rendered, Slow Query,
+- Rate Limit Warning, Memory Warning
 
-IMPORTANT:
-Return ONLY valid JSON.
+SEVERITY VALUES: Critical, High, Medium, Low
 
+You MUST respond with ONLY valid JSON, no markdown, no explanation.
 Format:
+{"classification": "...", "severity": "...", "root_cause": "...", "solution": "..."}"""
 
-{{
-    "classification": "...",
-    "severity": "...",
-    "root_cause": "...",
-    "solution": "..."
-}}
-"""
+        user_prompt = f"Classify this log:\n\n{log_text}"
 
         try:
             logger.debug("[LLM] Sending request to Groq API (llama-3.1-8b-instant)")
@@ -58,7 +60,8 @@ Format:
             response = self.client.chat.completions.create(
                 model="llama-3.1-8b-instant",
                 messages=[
-                    {"role": "user", "content": prompt}
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt}
                 ],
                 temperature=0.1
             )
@@ -75,8 +78,30 @@ Format:
                 "solution": "Manual review required"
             }
 
+        # Try to extract JSON — handle markdown code fences
         try:
             parsed_json = json.loads(content)
+        except json.JSONDecodeError:
+            # Strip markdown fences like ```json ... ```
+            import re
+            json_match = re.search(r'```(?:json)?\s*(\{.*?\})\s*```', content, re.DOTALL)
+            if json_match:
+                try:
+                    parsed_json = json.loads(json_match.group(1))
+                except json.JSONDecodeError:
+                    parsed_json = None
+            else:
+                # Try finding raw JSON object in the response
+                brace_match = re.search(r'\{[^{}]*\}', content, re.DOTALL)
+                if brace_match:
+                    try:
+                        parsed_json = json.loads(brace_match.group(0))
+                    except json.JSONDecodeError:
+                        parsed_json = None
+                else:
+                    parsed_json = None
+
+        if parsed_json and parsed_json.get("classification") and parsed_json.get("classification") != "Unknown":
             logger.info(
                 f"[LLM] Successfully parsed response — "
                 f"classification: {parsed_json.get('classification')}, "
@@ -84,12 +109,11 @@ Format:
             )
             return parsed_json
 
-        except json.JSONDecodeError as e:
-            logger.warning(f"[LLM] Failed to parse JSON response: {e}")
-            logger.debug(f"[LLM] Raw content was: {content}")
-            return {
-                "classification": "Unknown",
-                "severity": "Unknown",
-                "root_cause": content,
-                "solution": "Manual review required"
-            }
+        logger.warning(f"[LLM] Failed to extract valid classification from response")
+        logger.debug(f"[LLM] Raw content was: {content}")
+        return {
+            "classification": "Unknown",
+            "severity": "Unknown",
+            "root_cause": content,
+            "solution": "Manual review required"
+        }
