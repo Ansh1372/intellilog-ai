@@ -1,3 +1,13 @@
+---
+title: IntelliLog Backend
+emoji: 📊
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 <div align="center">
   <h1>IntelliLog AI</h1>
   <p><strong>Self-Hosted Log Classification & Anomaly Alerting System</strong></p>
